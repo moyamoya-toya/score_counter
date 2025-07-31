@@ -425,18 +425,24 @@
   @media (max-width: 600px) {
     .header {
       padding: 5px;
-      gap: 5px;
+      gap: 2px;
+    }
+    .header-left, .header-right {
+        gap: 5px;
+    }
+    .header-center {
+        gap: 2px;
     }
     .round-display, .start-player-input, .current-start-player-display span {
-      font-size: 1em;
+      font-size: 0.8em;
     }
-    .reset-btn, .mode-toggle-btn, .toggle-scoreboard-btn-header, .score-clear-btn, .toggle-initial-rotation-btn {
-      font-size: 0.7em;
-      padding: 2px 5px;
-      width: 60px;
+    .reset-btn, .mode-toggle-btn, .toggle-scoreboard-btn-header, .score-clear-btn, .toggle-rotation-btn, .toggle-initial-rotation-btn {
+      font-size: 0.5em;
+      padding: 1px 2px;
+      width: 50px;
     }
     .toggle-initial-rotation-btn {
-      width: 90px;
+      width: 70px;
     }
     .player-name-input {
       font-size: 1.2em;
@@ -447,6 +453,9 @@
     button {
       font-size: 0.9em;
       padding: 5px 8px;
+    }
+    .round-control button {
+      padding: 5px;
     }
   }
 </style>
