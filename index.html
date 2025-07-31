@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -459,13 +460,13 @@
 
 <div class="container">
   <div class="rotation-wrapper">
-    <div class="rotation-container">
-      <img id="rotation-image" class="rotation-image" src="data:image/png;base64,{counter_clockwise_img_b64}" alt="反時計回り">
-      <div id="rotation-text" class="rotation-text">反時計</div>
-    </div>
     <div class="initial-rotation-controls">
         <button class="toggle-initial-rotation-btn" onclick="toggleInitialRotation()">初回 回転方向</button>
         <span class="initial-rotation-display">初回は: <span id="initial-rotation">時計回り</span></span>
+    </div>
+    <div class="rotation-container">
+      <img id="rotation-image" class="rotation-image" src="data:image/png;base64,{counter_clockwise_img_b64}" alt="反時計回り">
+      <div id="rotation-text" class="rotation-text">反時計</div>
     </div>
   </div>
   <h1>スコアカウンター</h1>
