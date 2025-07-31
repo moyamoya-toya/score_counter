@@ -356,6 +356,31 @@
   #cancel-delete-btn, #cancel-reset-btn {
     background-color: #6c757d;
   }
+
+  @media (max-width: 600px) {
+    .header {
+      padding: 5px;
+      gap: 5px;
+    }
+    .round-display, .start-player-input, .current-start-player-display span {
+      font-size: 1em;
+    }
+    .reset-btn, .mode-toggle-btn, .toggle-scoreboard-btn-header {
+      font-size: 0.7em;
+      padding: 2px 5px;
+      width: 60px;
+    }
+    .player-name-input {
+      font-size: 1.2em;
+    }
+    .score {
+      font-size: 2em;
+    }
+    button {
+      font-size: 0.9em;
+      padding: 5px 8px;
+    }
+  }
 </style>
 </head>
 <body class="bw-mode">
@@ -410,9 +435,9 @@
             <div class="score" id="score-0">0</div>
           </div>
           <div class="controls">
-            <button onclick="changeScore(0, 10)">+10</button>
-            <button onclick="changeScore(0, 5)">+5</button>
             <button onclick="changeScore(0, 1)">+1</button>
+            <button onclick="changeScore(0, 5)">+5</button>
+            <button onclick="changeScore(0, 10)">+10</button>
           </div>
         </div>
       </div>
