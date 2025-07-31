@@ -433,6 +433,10 @@
     .header-center {
         gap: 2px;
     }
+    .start-player-control, .current-start-player-display {
+      flex-direction: column;
+      gap: 2px;
+    }
     .round-display, .start-player-input, .current-start-player-display span, .start-player-control span {
       font-size: 0.8em;
     }
@@ -473,12 +477,16 @@
   <div class="header-center">
     <div class="start-player-control">
       <span>初回のスタピ:</span>
-      <input type="number" id="initial-start-player" class="start-player-input" min="1" value="1" onchange="updateCurrentStartPlayer()">
-      <span id="initial-start-player-name"></span>
+      <div>
+        <input type="number" id="initial-start-player" class="start-player-input" min="1" value="1" onchange="updateCurrentStartPlayer()">
+        <span id="initial-start-player-name"></span>
+      </div>
     </div>
     <div class="current-start-player-display">
       <span>現在のスタピ:</span>
-      <span id="current-start-player">1</span><span id="current-start-player-name"></span>
+      <div>
+        <span id="current-start-player">1</span><span id="current-start-player-name"></span>
+      </div>
     </div>
     <div class="round-control">
       <button onclick="changeRound(-1)">-</button>
