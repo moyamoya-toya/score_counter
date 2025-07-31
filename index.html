@@ -124,7 +124,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    flex-wrap: wrap; /* Allow wrapping within controls if needed */
+    flex-wrap: nowrap; /* Prevent wrapping */
     justify-content: center; /* Center items within controls */
   }
   .round-control button {
@@ -132,7 +132,7 @@
     padding: 5px 10px;
     background-color: #555;
   }
-  .round-display, .start-player-input, .current-start-player-display span {
+  .round-display, .start-player-input, .current-start-player-display span, .start-player-control span {
     font-size: 1.2em;
     font-weight: bold;
   }
@@ -433,7 +433,7 @@
     .header-center {
         gap: 2px;
     }
-    .round-display, .start-player-input, .current-start-player-display span {
+    .round-display, .start-player-input, .current-start-player-display span, .start-player-control span {
       font-size: 0.8em;
     }
     .reset-btn, .mode-toggle-btn, .toggle-scoreboard-btn-header, .score-clear-btn, .toggle-rotation-btn, .toggle-initial-rotation-btn {
