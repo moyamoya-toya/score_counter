@@ -88,7 +88,7 @@
     flex: 2; /* Allow center to be larger */
     margin: 0 10px; /* Add some margin to the sides */
   }
-  .reset-btn, .mode-toggle-btn, .toggle-scoreboard-btn-header, .toggle-rotation-btn, .score-clear-btn {
+  .reset-btn, .mode-toggle-btn, .toggle-scoreboard-btn-header, .toggle-rotation-btn, .score-clear-btn, .toggle-initial-rotation-btn {
     font-size: 0.8em;
     padding: 3px 8px;
     background-color: #555;
@@ -115,17 +115,7 @@
     width: 90px;
   }
   .toggle-initial-rotation-btn {
-    font-size: 0.8em;
-    padding: 3px 8px;
-    background-color: #555;
-    border: 1px solid #777;
-    color: white;
-    border-radius: 4px;
-    cursor: pointer;
-    white-space: nowrap; /* Prevent text wrapping in buttons */
     width: 130px; /* Increased width */
-    visibility: hidden; /* Initially hidden but takes up space */
-    text-align: center;
   }
   .reset-btn, .score-clear-btn {
     background-color: #dc3545;
@@ -440,10 +430,13 @@
     .round-display, .start-player-input, .current-start-player-display span {
       font-size: 1em;
     }
-    .reset-btn, .mode-toggle-btn, .toggle-scoreboard-btn-header, .score-clear-btn {
+    .reset-btn, .mode-toggle-btn, .toggle-scoreboard-btn-header, .score-clear-btn, .toggle-initial-rotation-btn {
       font-size: 0.7em;
       padding: 2px 5px;
       width: 60px;
+    }
+    .toggle-initial-rotation-btn {
+      width: 90px;
     }
     .player-name-input {
       font-size: 1.2em;
@@ -466,7 +459,6 @@
     <button class="score-clear-btn" onclick="showScoreClearConfirmation()">スコアクリア</button>
     <div style="display: flex; align-items: center; gap: 5px;">
         <button class="toggle-rotation-btn" onclick="toggleRotation()">ドラフト表示</button>
-        <button id="toggle-initial-rotation-btn" class="toggle-initial-rotation-btn" onclick="toggleInitialRotation()">初回は: 時計回り</button>
     </div>
   </div>
   <div class="header-center">
@@ -488,6 +480,7 @@
   <div class="header-right">
     <button class="mode-toggle-btn" onclick="toggleMode()">カラー</button>
     <button class="toggle-scoreboard-btn-header" onclick="toggleScoreboard()">スコア</button>
+    <button id="toggle-initial-rotation-btn" class="toggle-initial-rotation-btn" onclick="toggleInitialRotation()" style="visibility: hidden;">初回は: 時計回り</button>
   </div>
 </div>
 
@@ -733,11 +726,9 @@
   }
 
   function toggleRotation() {
-    const initialBtn = document.getElementById('toggle-initial-rotation-btn');
     const isHidden = rotationWrapper.style.display === 'none' || rotationWrapper.style.display === '';
-
     rotationWrapper.style.display = isHidden ? 'flex' : 'none';
-    initialBtn.style.visibility = isHidden ? 'visible' : 'hidden';
+    initialRotationBtn.style.visibility = isHidden ? 'visible' : 'hidden';
   }
 
   function toggleInitialRotation() {
