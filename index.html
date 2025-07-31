@@ -4,19 +4,55 @@
 <title>スコアカウンター</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-  body {
+  body {{
     font-family: sans-serif;
     background-color: #f0f0f0;
     margin: 0;
     padding-top: 150px; /* Adjust padding to body to prevent content from being hidden by the fixed header */
-  }
-  body.bw-mode {
+  }}
+  body.bw-mode {{
     background-color: #ffffff;
-  }
-  h1 {
+  }}
+  h1 {{
     color: black;
-  }
-  .header {
+  }}
+  .rotation-wrapper {{
+    display: none;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+  }}
+  .rotation-container {{
+    position: relative;
+    width: 100px;
+    height: 100px;
+  }}
+  .rotation-image {{
+    width: 100%;
+    height: 100%;
+    transition: transform 0.3s;
+  }}
+  .rotation-image.clockwise {{
+    transform: scaleX(-1);
+  }}
+  .rotation-text {{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: black;
+    font-size: 1.2em;
+    font-weight: bold;
+    white-space: nowrap;
+  }}
+  .initial-rotation-controls {{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }}
+  .header {{
     position: fixed;
     top: 0;
     left: 0;
@@ -29,25 +65,25 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
-  .header-left, .header-right {
+  }}
+  .header-left, .header-right {{
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px;
-  }
-  .header-right {
+  }}
+  .header-right {{
     margin-right: 15px; /* Add margin to prevent overlap with scrollbar */
-  }
-  .header-center {
+  }}
+  .header-center {{
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 5px;
     flex-grow: 1; /* Allow center section to grow */
     margin: 0 10px; /* Add some margin to the sides */
-  }
-  .reset-btn, .mode-toggle-btn, .toggle-scoreboard-btn-header {
+  }}
+  .reset-btn, .mode-toggle-btn, .toggle-scoreboard-btn-header, .toggle-rotation-btn, .toggle-initial-rotation-btn {{
     font-size: 0.8em;
     padding: 3px 8px;
     background-color: #555;
@@ -56,40 +92,43 @@
     border-radius: 4px;
     cursor: pointer;
     white-space: nowrap; /* Prevent text wrapping in buttons */
-    width: 80px;
-  }
-  .reset-btn {
+    width: 90px;
+  }}
+  .reset-btn {{
     background-color: #dc3545;
-  }
-  .round-control, .start-player-control, .current-start-player-display {
+  }}
+  .round-control, .start-player-control, .current-start-player-display, .initial-rotation-control {{
     display: flex;
     align-items: center;
     gap: 10px;
     flex-wrap: wrap; /* Allow wrapping within controls if needed */
     justify-content: center; /* Center items within controls */
-  }
-  .round-control button {
+  }}
+  .round-control button {{
     font-size: 1em;
     padding: 5px 10px;
     background-color: #555;
-  }
-  .round-display, .start-player-input, .current-start-player-display span {
+  }}
+  .round-display, .start-player-input, .current-start-player-display span, .initial-rotation-display span {{
     font-size: 1.2em;
     font-weight: bold;
-  }
-  #current-start-player-name, #initial-start-player-name {
+  }}
+  #current-start-player-name, #initial-start-player-name {{
     font-style: italic;
     color: #ccc;
-  }
-  .start-player-input {
+  }}
+  .initial-rotation-display {{
+      color: black;
+  }}
+  .start-player-input {{
     width: 50px;
     text-align: center;
     background-color: #555;
     border: 1px solid #777;
     color: white;
     border-radius: 4px;
-  }
-  .container {
+  }}
+  .container {{
     text-align: center;
     background-color: white;
     padding: 20px;
@@ -98,18 +137,18 @@
     width: 90%;
     max-width: 400px;
     margin: 20px auto;
-  }
-  body.bw-mode .container {
+  }}
+  body.bw-mode .container {{
     background-color: #ffffff;
     border: 1px solid #333;
-  }
-  .player-list {
+  }}
+  .player-list {{
     display: flex;
     flex-direction: column;
     gap: 20px;
     margin-bottom: 20px;
-  }
-  .player {
+  }}
+  .player {{
     border: 1px solid #ddd;
     padding: 15px;
     border-radius: 8px;
@@ -117,18 +156,18 @@
     display: flex;
     align-items: center;
     justify-content: space-between; /* Distribute items along the main axis */
-  }
-  body.bw-mode .player {
+  }}
+  body.bw-mode .player {{
     background-color: #333 !important;
     border: 1px solid #333;
-  }
-  .player-order-controls {
+  }}
+  .player-order-controls {{
     display: flex;
     flex-direction: column;
     gap: 5px;
     margin-right: 10px;
-  }
-  .player-order-controls button {
+  }}
+  .player-order-controls button {{
     background-color: rgba(255, 255, 255, 0.2);
     border: 1px solid white;
     color: white;
@@ -140,12 +179,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-  body.bw-mode .player-order-controls button {
+  }}
+  body.bw-mode .player-order-controls button {{
     background-color: rgba(255, 255, 255, 0.2);
     border: 1px solid white;
-  }
-  .delete-player-btn {
+  }}
+  .delete-player-btn {{
     background-color: rgba(255,255,255,0.2);
     border: 1px solid white;
     color: white;
@@ -158,43 +197,43 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-  }
-  body.bw-mode .delete-player-btn {
+  }}
+  body.bw-mode .delete-player-btn {{
     background-color: rgba(255, 255, 255, 0.2);
     border: 1px solid white;
-  }
-  .player-content {
+  }}
+  .player-content {{
     flex-grow: 1;
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-right: 10px;
-  }
-  .second-layer {
+  }}
+  .second-layer {{
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-grow: 1;
-  }
-  .third-layer {
+  }}
+  .third-layer {{
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
-  .player-header {
+  }}
+  .player-header {{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 5px;
     margin-bottom: 10px;
-  }
-  .player-number {
+  }}
+  .player-number {{
     font-size: 1.5em;
     font-weight: bold;
     color: #eee;
-  }
-  .player-name-input {
+  }}
+  .player-name-input {{
     font-size: 1.5em;
     font-weight: bold;
     border: none;
@@ -204,23 +243,23 @@
     border-bottom: 2px solid #ddd;
     transition: border-color 0.3s;
     background-color: transparent;
-  }
-  .player-name-input:focus {
+  }}
+  .player-name-input:focus {{
     outline: none;
     border-bottom: 2px solid #fff;
-  }
-  .score {
+  }}
+  .score {{
     font-size: 2.5em;
     margin: 0;
     min-width: 60px;
     text-align: center;
-  }
-  .controls {
+  }}
+  .controls {{
     display: flex;
     flex-direction: column;
     gap: 5px;
-  }
-  button {
+  }}
+  button {{
     font-size: 1em;
     padding: 8px 12px;
     cursor: pointer;
@@ -230,27 +269,27 @@
     transition: background-color 0.3s;
     width: 50px;
     background-color: transparent;
-  }
-  button:hover {
+  }}
+  button:hover {{
     opacity: 0.8;
-  }
-  .add-player-btn {
+  }}
+  .add-player-btn {{
     width: 100%;
     padding: 15px;
     font-size: 1.2em;
     background-color: #007BFF;
-  }
-  body.bw-mode .add-player-btn {
+  }}
+  body.bw-mode .add-player-btn {{
     background-color: #333;
     color: white;
-  }
-  .add-player-btn:hover {
+  }}
+  .add-player-btn:hover {{
     background-color: #0056b3;
-  }
-  body.bw-mode .add-player-btn:hover {
+  }}
+  body.bw-mode .add-player-btn:hover {{
     background-color: #555;
-  }
-  .scoreboard-overlay {
+  }}
+  .scoreboard-overlay {{
     display: none;
     position: fixed;
     z-index: 1002;
@@ -260,8 +299,8 @@
     height: 100%;
     overflow: auto;
     background-color: rgba(0,0,0,0.4);
-  }
-  .scoreboard-content {
+  }}
+  .scoreboard-content {{
     background-color: #fefefe;
     margin: 15% auto;
     padding: 20px;
@@ -271,11 +310,11 @@
     text-align: center;
     border-radius: 10px;
     position: relative;
-  }
-  .scoreboard-content h2 {
+  }}
+  .scoreboard-content h2 {{
     color: black;
-  }
-  .close-scoreboard-btn {
+  }}
+  .close-scoreboard-btn {{
     position: absolute;
     top: 10px;
     right: 10px;
@@ -284,38 +323,38 @@
     border: none;
     background: none;
     color: #888;
-  }
-  .scoreboard-list {
+  }}
+  .scoreboard-list {{
     list-style: none;
     padding: 0;
     margin: 0;
-  }
-  .scoreboard-item {
+  }}
+  .scoreboard-item {{
     display: flex;
     justify-content: space-between;
     padding: 10px;
     border-bottom: 1px solid #eee;
-  }
-    .scoreboard-item:last-child {
+  }}
+    .scoreboard-item:last-child {{
     border-bottom: none;
-  }
-  .scoreboard-rank {
+  }}
+  .scoreboard-rank {{
     font-weight: bold;
     min-width: 30px;
     color: black;
-  }
-  .scoreboard-name {
+  }}
+  .scoreboard-name {{
     flex-grow: 1;
     text-align: left;
     margin-left: 15px;
     color: black;
-  }
-  .scoreboard-score {
+  }}
+  .scoreboard-score {{
     font-weight: bold;
     color: black;
-  }
+  }}
   /* Modal styles */
-  .modal {
+  .modal {{
     display: none;
     position: fixed;
     z-index: 1001;
@@ -325,8 +364,8 @@
     height: 100%;
     overflow: auto;
     background-color: rgba(0,0,0,0.4);
-  }
-  .modal-content {
+  }}
+  .modal-content {{
     background-color: #fefefe;
     margin: 15% auto;
     padding: 20px;
@@ -335,52 +374,58 @@
     max-width: 300px;
     text-align: center;
     border-radius: 10px;
-  }
-  .modal-content p {
+  }}
+  .modal-content p {{
     color: black;
-  }
-  .modal-buttons {
+  }}
+  .modal-buttons {{
     margin-top: 20px;
-  }
-  .modal-buttons button {
+  }}
+  .modal-buttons button {{
     width: 80px;
     padding: 10px;
     margin: 0 10px;
     border: none;
     color: white;
     border-radius: 5px;
-  }
-  #confirm-delete-btn, #confirm-reset-btn {
+  }}
+  #confirm-delete-btn, #confirm-reset-btn {{
     background-color: #dc3545;
-  }
-  #cancel-delete-btn, #cancel-reset-btn {
+  }}
+  #cancel-delete-btn, #cancel-reset-btn {{
     background-color: #6c757d;
-  }
+  }}
+  #confirm-score-btn {{
+    background-color: #28a745;
+  }}
+  #cancel-score-btn {{
+    background-color: #6c757d;
+  }}
 
-  @media (max-width: 600px) {
-    .header {
+  @media (max-width: 600px) {{
+    .header {{
       padding: 5px;
       gap: 5px;
-    }
-    .round-display, .start-player-input, .current-start-player-display span {
+    }}
+    .round-display, .start-player-input, .current-start-player-display span {{
       font-size: 1em;
-    }
-    .reset-btn, .mode-toggle-btn, .toggle-scoreboard-btn-header {
+    }}
+    .reset-btn, .mode-toggle-btn, .toggle-scoreboard-btn-header {{
       font-size: 0.7em;
       padding: 2px 5px;
       width: 60px;
-    }
-    .player-name-input {
+    }}
+    .player-name-input {{
       font-size: 1.2em;
-    }
-    .score {
+    }}
+    .score {{
       font-size: 2em;
-    }
-    button {
+    }}
+    button {{
       font-size: 0.9em;
       padding: 5px 8px;
-    }
-  }
+    }}
+  }}
 </style>
 </head>
 <body class="bw-mode">
@@ -388,6 +433,7 @@
 <div class="header">
   <div class="header-left">
     <button class="reset-btn" onclick="showResetConfirmation()">リセット</button>
+    <button class="toggle-rotation-btn" onclick="toggleRotation()">回転表示</button>
   </div>
   <div class="header-center">
     <div class="round-control">
@@ -396,12 +442,12 @@
       <button onclick="changeRound(1)">+</button>
     </div>
     <div class="start-player-control">
-      <span>最初のスタートプレイヤー:</span>
+      <span>初回親:</span>
       <input type="number" id="initial-start-player" class="start-player-input" min="1" value="1" onchange="updateCurrentStartPlayer()">
       <span id="initial-start-player-name"></span>
     </div>
     <div class="current-start-player-display">
-      <span>現在のスタートプレイヤー:</span>
+      <span>現在親:</span>
       <span id="current-start-player">1</span><span id="current-start-player-name"></span>
     </div>
   </div>
@@ -412,6 +458,16 @@
 </div>
 
 <div class="container">
+  <div class="rotation-wrapper">
+    <div class="initial-rotation-controls">
+        <button class="toggle-initial-rotation-btn" onclick="toggleInitialRotation()">初回 回転方向</button>
+        <span class="initial-rotation-display">初回は: <span id="initial-rotation">時計回り</span></span>
+    </div>
+    <div class="rotation-container">
+      <img id="rotation-image" class="rotation-image" src="data:image/png;base64,{counter_clockwise_img_b64}" alt="反時計回り">
+      <div id="rotation-text" class="rotation-text">反時計</div>
+    </div>
+  </div>
   <h1>スコアカウンター</h1>
   <div id="player-list" class="player-list">
     <!-- Player 1 -->
@@ -432,12 +488,12 @@
               <span class="player-number">#1</span>
               <input type="text" class="player-name-input" value="プレイヤー 1" onchange="saveName(0, this.value)">
             </div>
-            <div class="score" id="score-0">0</div>
+            <div class="score" id="score-0" onmousedown="startLongPress(0)" onmouseup="endLongPress()" ontouchstart="startLongPress(0)" ontouchend="endLongPress()">0</div>
           </div>
           <div class="controls">
-            <button onclick="changeScore(0, 1)">+1</button>
-            <button onclick="changeScore(0, 5)">+5</button>
             <button onclick="changeScore(0, 10)">+10</button>
+            <button onclick="changeScore(0, 5)">+5</button>
+            <button onclick="changeScore(0, 1)">+1</button>
           </div>
         </div>
       </div>
@@ -478,14 +534,32 @@
   </div>
 </div>
 
+<!-- Score Input Modal -->
+<div id="score-modal" class="modal">
+  <div class="modal-content">
+    <p>新しいスコアを入力してください</p>
+    <input type="text" id="new-score-input" pattern="-?\\d*">
+    <div class="modal-buttons">
+      <button id="confirm-score-btn">OK</button>
+      <button id="cancel-score-btn">キャンセル</button>
+    </div>
+  </div>
+</div>
+
 <script>
   let scores = [0];
   let playerNames = ['プレイヤー 1'];
   let roundNumber = 1;
+  let initialRotationClockwise = true;
   const playerList = document.getElementById('player-list');
   const scoreboardOverlay = document.getElementById('scoreboard-overlay');
   const scoreboardList = document.getElementById('scoreboard-list');
   const roundNumberElement = document.getElementById('round-number');
+  const rotationContainer = document.querySelector('.rotation-container');
+  const rotationWrapper = document.querySelector('.rotation-wrapper');
+  const rotationImageElement = document.getElementById('rotation-image');
+  const rotationTextElement = document.getElementById('rotation-text');
+  const initialRotationElement = document.getElementById('initial-rotation');
   const initialStartPlayerElement = document.getElementById('initial-start-player');
   const initialStartPlayerNameElement = document.getElementById('initial-start-player-name');
   const currentStartPlayerElement = document.getElementById('current-start-player');
@@ -497,112 +571,133 @@
   const resetModal = document.getElementById('reset-modal');
   const confirmResetBtn = document.getElementById('confirm-reset-btn');
   const cancelResetBtn = document.getElementById('cancel-reset-btn');
+  const scoreModal = document.getElementById('score-modal');
+  const confirmScoreBtn = document.getElementById('confirm-score-btn');
+  const cancelScoreBtn = document.getElementById('cancel-score-btn');
+  const newScoreInput = document.getElementById('new-score-input');
   const bodyElement = document.body;
   const modeToggleButton = document.querySelector('.mode-toggle-btn');
-  let playerToDelete = null;
+  let playerToEdit = null;
+  let longPressTimer;
 
   loadGameState();
 
-  function sanitizeHTML(str) {
+  function sanitizeHTML(str) {{
     const temp = document.createElement('div');
     temp.textContent = str;
     return temp.innerHTML;
-  }
+  }}
 
-  function saveGameState() {
-    const gameState = {
+  function saveGameState() {{
+    const gameState = {{
       scores: scores,
       playerNames: playerNames,
       roundNumber: roundNumber,
-      initialStartPlayer: initialStartPlayerElement.value
-    };
+      initialStartPlayer: initialStartPlayerElement.value,
+      initialRotationClockwise: initialRotationClockwise
+    }};
     localStorage.setItem('golfScoreState', JSON.stringify(gameState));
-  }
+  }}
 
-  function loadGameState() {
+  function loadGameState() {{
     const savedState = localStorage.getItem('golfScoreState');
-    if (savedState) {
+    if (savedState) {{
       const gameState = JSON.parse(savedState);
       scores = gameState.scores;
       playerNames = gameState.playerNames;
       roundNumber = gameState.roundNumber;
       initialStartPlayerElement.value = gameState.initialStartPlayer;
-    }
-  }
+      initialRotationClockwise = gameState.initialRotationClockwise;
+    }}
+  }}
 
-  function showResetConfirmation() {
+  function showResetConfirmation() {{
     resetModal.style.display = "block";
-  }
+  }}
 
-  confirmResetBtn.onclick = function() {
+  confirmResetBtn.onclick = function() {{
     resetGame();
     resetModal.style.display = "none";
-  }
+  }}
 
-  cancelResetBtn.onclick = function() {
+  cancelResetBtn.onclick = function() {{
     resetModal.style.display = "none";
-  }
+  }}
 
-  function resetGame() {
+  function resetGame() {{
     scores = [0];
     playerNames = ['プレイヤー 1'];
     roundNumber = 1;
     initialStartPlayerElement.value = 1;
+    initialRotationClockwise = true;
     renderPlayers();
     updateScoreboard();
     updateCurrentStartPlayer();
     saveGameState();
-  }
+  }}
 
-  function toggleScoreboard() {
-    if (scoreboardOverlay.style.display === 'none' || scoreboardOverlay.style.display === '') {
+  function toggleScoreboard() {{
+    if (scoreboardOverlay.style.display === 'none' || scoreboardOverlay.style.display === '') {{
       updateScoreboard();
       scoreboardOverlay.style.display = 'block';
-    } else {
+    }} else {{
       scoreboardOverlay.style.display = 'none';
-    }
-  }
+    }}
+  }}
 
-  function toggleMode() {
+  function toggleMode() {{
     bodyElement.classList.toggle('bw-mode');
     const isBwMode = bodyElement.classList.contains('bw-mode');
     modeToggleButton.textContent = isBwMode ? 'カラーモード' : '白黒モード';
     renderPlayers(); // Re-render to apply new styles
-  }
+  }}
 
-  function showDeleteConfirmation(playerId) {
+  function toggleRotation() {{
+    rotationWrapper.style.display = (rotationWrapper.style.display === 'none' || rotationWrapper.style.display === '') ? 'flex' : 'none';
+  }}
+  
+  function toggleInitialRotation() {{
+    initialRotationClockwise = !initialRotationClockwise;
+    initialRotationElement.textContent = initialRotationClockwise ? '時計回り' : '反時計回り';
+    changeRound(0); // Update rotation display
+  }}
+
+  function showDeleteConfirmation(playerId) {{
     playerToDelete = playerId;
     deleteModal.style.display = "block";
-  }
+  }}
 
-  confirmDeleteBtn.onclick = function() {
-    if (playerToDelete !== null) {
+  confirmDeleteBtn.onclick = function() {{
+    if (playerToDelete !== null) {{
       deletePlayer(playerToDelete);
       playerToDelete = null;
-    }
+    }}
     deleteModal.style.display = "none";
-  }
+  }}
 
-  cancelDeleteBtn.onclick = function() {
+  cancelDeleteBtn.onclick = function() {{
     playerToDelete = null;
     deleteModal.style.display = "none";
-  }
+  }}
 
-  window.onclick = function(event) {
-    if (event.target == deleteModal) {
+  window.onclick = function(event) {{
+    if (event.target == deleteModal) {{
       playerToDelete = null;
       deleteModal.style.display = "none";
-    }
-    if (event.target == resetModal) {
+    }}
+    if (event.target == resetModal) {{
       resetModal.style.display = "none";
-    }
-  }
+    }}
+    if (event.target == scoreModal) {{
+      scoreModal.style.display = "none";
+    }}
+  }}
   
-  function movePlayer(index, direction) {
+  function movePlayer(index, direction) {{
     const newIndex = index + direction;
-    if (newIndex < 0 || newIndex >= scores.length) {
+    if (newIndex < 0 || newIndex >= scores.length) {{
       return; // Invalid move
-    }
+    }}
 
     // Swap players in the arrays
     [scores[index], scores[newIndex]] = [scores[newIndex], scores[index]];
@@ -612,21 +707,47 @@
     updateScoreboard();
     updateCurrentStartPlayer();
     saveGameState();
-  }
+  }}
 
-  function deletePlayer(playerId) {
+  function deletePlayer(playerId) {{
     scores.splice(playerId, 1);
     playerNames.splice(playerId, 1);
     renderPlayers();
     updateScoreboard();
     updateCurrentStartPlayer();
     saveGameState();
-  }
+  }}
+  
+  function startLongPress(playerId) {{
+    playerToEdit = playerId;
+    longPressTimer = setTimeout(() => {{
+      newScoreInput.value = scores[playerId];
+      scoreModal.style.display = "block";
+    }}, 1000); // 1-second long press
+  }}
+  
+  function endLongPress() {{
+    clearTimeout(longPressTimer);
+  }}
+  
+  confirmScoreBtn.onclick = function() {{
+    const newScore = newScoreInput.value;
+    if (newScore !== null && /^-?\\d+$/.test(newScore)) {{
+      scores[playerToEdit] = parseInt(newScore, 10);
+      updateScore(playerToEdit);
+      saveGameState();
+    }}
+    scoreModal.style.display = "none";
+  }}
+  
+  cancelScoreBtn.onclick = function() {{
+    scoreModal.style.display = "none";
+  }}
 
-  function renderPlayers() {
+  function renderPlayers() {{
     playerList.innerHTML = '';
     const isBwMode = bodyElement.classList.contains('bw-mode');
-    scores.forEach((score, index) => {
+    scores.forEach((score, index) => {{
         const color = isBwMode ? '#333' : colors[index % colors.length];
         const playerDiv = document.createElement('div');
         playerDiv.className = 'player';
@@ -634,117 +755,120 @@
         playerDiv.style.backgroundColor = color;
         playerDiv.innerHTML = `
             <div class="player-order-controls">
-                <button onclick="movePlayer(${index}, -1)" ${index === 0 ? 'disabled' : ''}>↑</button>
-                <button onclick="movePlayer(${index}, 1)" ${index === scores.length - 1 ? 'disabled' : ''}>↓</button>
+                <button onclick="movePlayer(${{index}}, -1)" ${{index === 0 ? 'disabled' : ''}}>↑</button>
+                <button onclick="movePlayer(${{index}}, 1)" ${{index === scores.length - 1 ? 'disabled' : ''}}>↓</button>
             </div>
             <div class="player-content">
               <div class="second-layer">
                 <div class="controls">
-                  <button onclick="changeScore(${index}, -10)">-10</button>
-                  <button onclick="changeScore(${index}, -5)">-5</button>
-                  <button onclick="changeScore(${index}, -1)">-1</button>
+                  <button onclick="changeScore(${{index}}, -10)">-10</button>
+                  <button onclick="changeScore(${{index}}, -5)">-5</button>
+                  <button onclick="changeScore(${{index}}, -1)">-1</button>
                 </div>
                 <div class="third-layer">
                   <div class="player-header">
-                    <span class="player-number">#${index + 1}</span>
-                    <input type="text" class="player-name-input" value="${sanitizeHTML(playerNames[index])}" onchange="saveName(${index}, this.value)">
+                    <span class="player-number">#${{index + 1}}</span>
+                    <input type="text" class="player-name-input" value="${{sanitizeHTML(playerNames[index])}}" onchange="saveName(${{index}}, this.value)">
                   </div>
-                  <div class="score" id="score-${index}">${score}</div>
+                  <div class="score" id="score-${{index}}" onmousedown="startLongPress(${{index}})" onmouseup="endLongPress()" ontouchstart="startLongPress(${{index}})" ontouchend="endLongPress()">${{score}}</div>
                 </div>
                 <div class="controls">
-                  <button onclick="changeScore(${index}, 10)">+10</button>
-                  <button onclick="changeScore(${index}, 5)">+5</button>
-                  <button onclick="changeScore(${index}, 1)">+1</button>
+                  <button onclick="changeScore(${{index}}, 10)">+10</button>
+                  <button onclick="changeScore(${{index}}, 5)">+5</button>
+                  <button onclick="changeScore(${{index}}, 1)">+1</button>
                 </div>
               </div>
             </div>
-            <button class="delete-player-btn" onclick="showDeleteConfirmation(${index})">X</button>
+            <button class="delete-player-btn" onclick="showDeleteConfirmation(${{index}})">X</button>
         `;
         playerList.appendChild(playerDiv);
-    });
-  }
+    }});
+  }}
 
-  function updateCurrentStartPlayer() {
+  function updateCurrentStartPlayer() {{
     const initialStartPlayer = parseInt(initialStartPlayerElement.value, 10);
     const numPlayers = scores.length;
 
-    if (numPlayers > 0) {
+    if (numPlayers > 0) {{
       const initialPlayerIndex = (initialStartPlayer - 1) % numPlayers;
-      initialStartPlayerNameElement.textContent = ` (${sanitizeHTML(playerNames[initialPlayerIndex])})`;
+      initialStartPlayerNameElement.textContent = ` (${{sanitizeHTML(playerNames[initialPlayerIndex])}})`;
 
       const currentPlayerIndex = (initialStartPlayer - 1 + roundNumber - 1) % numPlayers;
       currentStartPlayerElement.textContent = currentPlayerIndex + 1;
-      currentStartPlayerNameElement.textContent = ` (${sanitizeHTML(playerNames[currentPlayerIndex])})`;
-    } else {
+      currentStartPlayerNameElement.textContent = ` (${{sanitizeHTML(playerNames[currentPlayerIndex])}})`;
+    }} else {{
         initialStartPlayerNameElement.textContent = '';
         currentStartPlayerElement.textContent = '-';
         currentStartPlayerNameElement.textContent = '';
-    }
+    }}
     saveGameState();
-  }
+  }}
 
-  function changeRound(amount) {
+  function changeRound(amount) {{
     roundNumber += amount;
-    if (roundNumber < 1) {
+    if (roundNumber < 1) {{
         roundNumber = 1;
-    }
+    }}
     roundNumberElement.textContent = roundNumber;
+    const isClockwise = (roundNumber % 2 === 1) ? initialRotationClockwise : !initialRotationClockwise;
+    rotationImageElement.classList.toggle('clockwise', isClockwise);
+    rotationTextElement.textContent = isClockwise ? '時計' : '反時計';
     updateCurrentStartPlayer();
     saveGameState();
-  }
+  }}
 
-  function updateScore(playerId) {
+  function updateScore(playerId) {{
     const scoreElement = document.getElementById('score-' + playerId);
-    if(scoreElement) {
+    if(scoreElement) {{
         scoreElement.textContent = scores[playerId];
-    }
+    }}
     updateScoreboard();
-  }
+  }}
 
-  function saveName(playerId, newName) {
+  function saveName(playerId, newName) {{
     playerNames[playerId] = newName;
     updateScoreboard();
     updateCurrentStartPlayer();
     saveGameState();
-  }
+  }}
 
-  function changeScore(playerId, amount) {
+  function changeScore(playerId, amount) {{
     scores[playerId] += amount;
     updateScore(playerId);
     saveGameState();
-  }
+  }}
 
-  function addPlayer() {
+  function addPlayer() {{
     const newPlayerId = scores.length;
     scores.push(0);
-    const defaultName = `プレイヤー ${newPlayerId + 1}`;
+    const defaultName = `プレイヤー ${{newPlayerId + 1}}`;
     playerNames.push(defaultName);
     renderPlayers();
     updateScoreboard();
     updateCurrentStartPlayer();
     saveGameState();
-  }
+  }}
 
-  function updateScoreboard() {
-      const rankedPlayers = scores.map((score, index) => ({
+  function updateScoreboard() {{
+      const rankedPlayers = scores.map((score, index) => ({{
           name: playerNames[index],
           score: score,
           id: index
-      })).sort((a, b) => b.score - a.score);
+      }})).sort((a, b) => b.score - a.score);
 
       scoreboardList.innerHTML = '';
 
-      rankedPlayers.forEach((player, index) => {
+      rankedPlayers.forEach((player, index) => {{
           const item = document.createElement('li');
           item.className = 'scoreboard-item';
           item.innerHTML = `
-              <span class="scoreboard-rank">${index + 1}.</span>
-              <span class="scoreboard-name">${sanitizeHTML(player.name)}</span>
-              <span class="scoreboard-score">${player.score}</span>
+              <span class="scoreboard-rank">${{index + 1}}.</span>
+              <span class="scoreboard-name">${{sanitizeHTML(player.name)}}</span>
+              <span class="scoreboard-score">${{player.score}}</span>
           `;
           scoreboardList.appendChild(item);
-      });
-  }
+      }});
+  }}
 
   // Initial setup
   renderPlayers();
