@@ -43,7 +43,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     color: black;
-    font-size: 1.2em;
+    font-size: 1.0em;
     font-weight: bold;
     white-space: nowrap;
   }
@@ -397,7 +397,7 @@
     background-color: #6c757d;
   }
   #confirm-score-btn {
-    background-color: #28a745;
+    background-color: #dc3545;
   }
   #cancel-score-btn {
     background-color: #6c757d;
@@ -439,22 +439,22 @@
   <div class="header-center">
     <div class="round-control">
       <button onclick="changeRound(-1)">-</button>
-      <span class="round-display">Round: <span id="round-number">1</span></span>
+      <span class="round-display">ラウンド: <span id="round-number">1</span></span>
       <button onclick="changeRound(1)">+</button>
     </div>
     <div class="start-player-control">
-      <span>初回親:</span>
+      <span>初回のスタピ:</span>
       <input type="number" id="initial-start-player" class="start-player-input" min="1" value="1" onchange="updateCurrentStartPlayer()">
       <span id="initial-start-player-name"></span>
     </div>
     <div class="current-start-player-display">
-      <span>現在親:</span>
+      <span>現在のスタピ:</span>
       <span id="current-start-player">1</span><span id="current-start-player-name"></span>
     </div>
   </div>
   <div class="header-right">
-    <button class="mode-toggle-btn" onclick="toggleMode()">カラーモード</button>
-    <button class="toggle-scoreboard-btn-header" onclick="toggleScoreboard()">スコアボード</button>
+    <button class="mode-toggle-btn" onclick="toggleMode()">カラー</button>
+    <button class="toggle-scoreboard-btn-header" onclick="toggleScoreboard()">スコア</button>
   </div>
 </div>
 
@@ -649,14 +649,14 @@
   function toggleMode() {
     bodyElement.classList.toggle('bw-mode');
     const isBwMode = bodyElement.classList.contains('bw-mode');
-    modeToggleButton.textContent = isBwMode ? 'カラーモード' : '白黒モード';
+    modeToggleButton.textContent = isBwMode ? 'カラー' : '白黒';
     renderPlayers(); // Re-render to apply new styles
   }
 
   function toggleRotation() {
     rotationWrapper.style.display = (rotationWrapper.style.display === 'none' || rotationWrapper.style.display === '') ? 'flex' : 'none';
   }
-  
+
   function toggleInitialRotation() {
     initialRotationClockwise = !initialRotationClockwise;
     initialRotationElement.textContent = initialRotationClockwise ? '時計回り' : '反時計回り';
@@ -693,7 +693,7 @@
       scoreModal.style.display = "none";
     }
   }
-  
+
   function movePlayer(index, direction) {
     const newIndex = index + direction;
     if (newIndex < 0 || newIndex >= scores.length) {
@@ -718,7 +718,7 @@
     updateCurrentStartPlayer();
     saveGameState();
   }
-  
+
   function startLongPress(playerId) {
     playerToEdit = playerId;
     longPressTimer = setTimeout(() => {
@@ -726,11 +726,11 @@
       scoreModal.style.display = "block";
     }, 1000); // 1-second long press
   }
-  
+
   function endLongPress() {
     clearTimeout(longPressTimer);
   }
-  
+
   confirmScoreBtn.onclick = function() {
     const newScore = newScoreInput.value;
     if (newScore !== null && /^-?\d+$/.test(newScore)) {
@@ -740,7 +740,7 @@
     }
     scoreModal.style.display = "none";
   }
-  
+
   cancelScoreBtn.onclick = function() {
     scoreModal.style.display = "none";
   }
