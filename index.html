@@ -442,11 +442,6 @@
     <button class="toggle-rotation-btn" onclick="toggleRotation()">回転表示</button>
   </div>
   <div class="header-center">
-    <div class="round-control">
-      <button onclick="changeRound(-1)">-</button>
-      <span class="round-display">ラウンド: <span id="round-number">1</span></span>
-      <button onclick="changeRound(1)">+</button>
-    </div>
     <div class="start-player-control">
       <span>初回のスタピ:</span>
       <input type="number" id="initial-start-player" class="start-player-input" min="1" value="1" onchange="updateCurrentStartPlayer()">
@@ -455,6 +450,11 @@
     <div class="current-start-player-display">
       <span>現在のスタピ:</span>
       <span id="current-start-player">1</span><span id="current-start-player-name"></span>
+    </div>
+    <div class="round-control">
+      <button onclick="changeRound(-1)">-</button>
+      <span class="round-display">ラウンド: <span id="round-number">1</span></span>
+      <button onclick="changeRound(1)">+</button>
     </div>
   </div>
   <div class="header-right">
@@ -492,7 +492,7 @@
           <div class="third-layer">
             <div class="player-header">
               <span class="player-number">#1</span>
-              <input type="text" class="player-name-input" value="プレイヤー 1" onchange="saveName(0, this.value)">
+              <input type="text" class="player-name-input" value="プレイヤー 1" onchange="saveName(0, this.value)" onfocus="this.select()">
             </div>
             <div class="score" id="score-0" onmousedown="startLongPress(0)" onmouseup="endLongPress()" ontouchstart="startLongPress(0)" ontouchend="endLongPress()">0</div>
           </div>
@@ -774,7 +774,7 @@
                 <div class="third-layer">
                   <div class="player-header">
                     <span class="player-number">#${index + 1}</span>
-                    <input type="text" class="player-name-input" value="${sanitizeHTML(playerNames[index])}" onchange="saveName(${index}, this.value)">
+                    <input type="text" class="player-name-input" value="${sanitizeHTML(playerNames[index])}" onchange="saveName(${index}, this.value)" onfocus="this.select()">
                   </div>
                   <div class="score" id="score-${index}" onmousedown="startLongPress(${index})" onmouseup="endLongPress()" ontouchstart="startLongPress(${index})" ontouchend="endLongPress()">${score}</div>
                 </div>
