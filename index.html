@@ -1,4 +1,6 @@
 
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -64,8 +66,15 @@
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     z-index: 1000;
     display: flex;
+    flex-direction: column; /* Changed to column */
+    align-items: center;
+  }
+  .header-main {
+    display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
   }
   .header-left, .header-right {
     display: flex;
@@ -87,6 +96,14 @@
     gap: 5px;
     flex: 2; /* Allow center to be larger */
     margin: 0 10px; /* Add some margin to the sides */
+  }
+  .round-control-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    border-top: 1px solid #555;
+    padding-top: 10px;
   }
   .reset-btn, .mode-toggle-btn, .toggle-scoreboard-btn-header, .toggle-rotation-btn, .score-clear-btn, .toggle-initial-rotation-btn {
     font-size: 0.8em;
@@ -147,6 +164,15 @@
     border: 1px solid #777;
     color: white;
     border-radius: 4px;
+  }
+  /* Hide spin buttons on number inputs */
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type=number] {
+    -moz-appearance: textfield;
   }
   .container {
     text-align: center;
@@ -467,37 +493,41 @@
 <body class="bw-mode">
 
 <div class="header">
-  <div class="header-left">
-    <button class="reset-btn" onclick="showResetConfirmation()">リセット</button>
-    <button class="score-clear-btn" onclick="showScoreClearConfirmation()">スコアクリア</button>
-    <div style="display: flex; align-items: center; gap: 5px;">
-        <button class="toggle-rotation-btn" onclick="toggleRotation()">ドラフト表示</button>
+  <div class="header-main">
+    <div class="header-left">
+      <button class="reset-btn" onclick="showResetConfirmation()">リセット</button>
+      <button class="score-clear-btn" onclick="showScoreClearConfirmation()">スコアクリア</button>
+      <div style="display: flex; align-items: center; gap: 5px;">
+          <button class="toggle-rotation-btn" onclick="toggleRotation()">ドラフト表示</button>
+      </div>
+    </div>
+    <div class="header-center">
+      <div class="start-player-control">
+        <span>初回のスタピ:</span>
+        <div>
+          <input type="number" id="initial-start-player" class="start-player-input" min="1" value="1" onchange="updateCurrentStartPlayer()">
+          <span id="initial-start-player-name"></span>
+        </div>
+      </div>
+      <div class="current-start-player-display">
+        <span>現在のスタピ:</span>
+        <div>
+          <span id="current-start-player">1</span><span id="current-start-player-name"></span>
+        </div>
+      </div>
+    </div>
+    <div class="header-right">
+      <button class="mode-toggle-btn" onclick="toggleMode()">カラー</button>
+      <button class="toggle-scoreboard-btn-header" onclick="toggleScoreboard()">スコア</button>
+      <button id="toggle-initial-rotation-btn" class="toggle-initial-rotation-btn" onclick="toggleInitialRotation()" style="visibility: hidden;">初回は: 時計回り</button>
     </div>
   </div>
-  <div class="header-center">
-    <div class="start-player-control">
-      <span>初回のスタピ:</span>
-      <div>
-        <input type="number" id="initial-start-player" class="start-player-input" min="1" value="1" onchange="updateCurrentStartPlayer()">
-        <span id="initial-start-player-name"></span>
-      </div>
-    </div>
-    <div class="current-start-player-display">
-      <span>現在のスタピ:</span>
-      <div>
-        <span id="current-start-player">1</span><span id="current-start-player-name"></span>
-      </div>
-    </div>
+  <div class="round-control-wrapper">
     <div class="round-control">
       <button onclick="changeRound(-1)">-</button>
       <span class="round-display">ラウンド: <span id="round-number">1</span></span>
       <button onclick="changeRound(1)">+</button>
     </div>
-  </div>
-  <div class="header-right">
-    <button class="mode-toggle-btn" onclick="toggleMode()">カラー</button>
-    <button class="toggle-scoreboard-btn-header" onclick="toggleScoreboard()">スコア</button>
-    <button id="toggle-initial-rotation-btn" class="toggle-initial-rotation-btn" onclick="toggleInitialRotation()" style="visibility: hidden;">初回は: 時計回り</button>
   </div>
 </div>
 
@@ -526,7 +556,7 @@
           <div class="third-layer">
             <div class="player-header">
               <span class="player-number">#1</span>
-              <input type="text" class="player-name-input" value="{sanitizeHTML(playerNames[0])}" onchange="saveName(0, this.value)" onfocus="this.select()">
+              <input type="text" class="player-name-input" value="プレイヤー 1" onchange="saveName(0, this.value)" onfocus="this.select()">
             </div>
             <div class="score" id="score-0" onmousedown="startLongPress(0)" onmouseup="endLongPress()" ontouchstart="startLongPress(0)" ontouchend="endLongPress()">0</div>
           </div>
